@@ -19,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -50,6 +51,13 @@ public class MainFrameSettings extends JPanel {
 		JCheckBox autoSetChk = new JCheckBox("自动设置分辨率");
 		axisSetting.add(autoSetChk);
 
+		JTextArea hintText = new JTextArea(
+				"温馨提示：\r\n自动设置分辨率可以锁定刻度线\r\n点击绘图区后，按键盘上下左右调整坐标轴分度值\r\n图例可以拖动");
+		hintText.setEditable(false);
+		hintText.setLineWrap(true);
+		hintText.setWrapStyleWord(true);
+		axisSetting.add(hintText);
+		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
 		c.gridwidth = 1;
@@ -57,7 +65,7 @@ public class MainFrameSettings extends JPanel {
 		c.insets = new Insets(5, 5, 5, 5);
 		c.gridwidth = 0;
 		axisSettingLayout.setConstraints(autoSetChk, c);
-
+		axisSettingLayout.setConstraints(hintText, c);
 		autoSetChk.addItemListener(new ItemListener() {
 
 			// 增加一个监听器以便自动设置分度值
@@ -118,7 +126,7 @@ public class MainFrameSettings extends JPanel {
 				public void keyReleased(KeyEvent e) {
 					try{
 						double value = Double.valueOf(t.getText());
-						setCurrentValue(value,Source.JTextField);
+						setCurrentValue(value,Source.JTextField,true);
 					}
 					catch(Exception e1){
 						

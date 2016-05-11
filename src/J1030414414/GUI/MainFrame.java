@@ -3,8 +3,6 @@ package J1030414414.GUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -25,6 +23,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import J1030414414.Function;
+import J1030414414.Utils;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -32,7 +31,7 @@ public class MainFrame extends JFrame {
 	private GraphicPanel myPanel = new GraphicPanel();
 
 	private MainFrameSettings settingPanel = new MainFrameSettings(myPanel);
-	
+
 	public MainFrame() {
 		super("曲线绘制");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -64,7 +63,7 @@ public class MainFrame extends JFrame {
 		JMenuItem file_export = new JMenuItem("导出图片(E)...");
 		file_export.setMnemonic('E');
 		fileMenu.add(file_export);
-
+		// ---------------------------导出图片-------------------------------------
 		file_export.addActionListener(new ActionListener() {
 
 			@Override
@@ -116,7 +115,14 @@ public class MainFrame extends JFrame {
 		JMenuItem file_exit = new JMenuItem("退出(X)");
 		file_exit.setMnemonic('X');
 		fileMenu.add(file_exit);
-
+		file_exit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MainFrame.this.dispose();
+				
+			}
+		});
 		bar.add(fileMenu);
 
 		JMenu editMenu = new JMenu("编辑(E)");
@@ -165,6 +171,7 @@ public class MainFrame extends JFrame {
 		// ------------------------打开文件---------------------------
 		file_open.addActionListener(new ActionListener() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser("./");
@@ -246,11 +253,31 @@ public class MainFrame extends JFrame {
 
 		JCheckBoxMenuItem view_Settings = new JCheckBoxMenuItem("坐标轴设置(A)");
 		view_Settings.setMnemonic('A');
+		view_Settings.setSelected(true);
 		viewMenu.add(view_Settings);
+
+		view_Settings.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				boolean enable = view_Settings.isSelected();
+				settingPanel.setVisible(enable);
+			}
+		});
 
 		JCheckBoxMenuItem view_Signs = new JCheckBoxMenuItem("图例(S)");
 		view_Signs.setMnemonic('S');
+		view_Signs.setSelected(true);
 		viewMenu.add(view_Signs);
+
+		view_Signs.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				boolean enable = view_Signs.isSelected();
+				myPanel.setSignVisible(enable);
+			}
+		});
 
 		bar.add(viewMenu);
 
@@ -261,12 +288,31 @@ public class MainFrame extends JFrame {
 		help_about.setMnemonic('A');
 		helpMenu.add(help_about);
 
+		help_about.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+
+					String url = "https://github.com/Ethan0w0/DrawLine";
+					java.net.URI uri = java.net.URI.create(url);
+					java.awt.Desktop dp = java.awt.Desktop.getDesktop();
+					if (dp.isSupported(java.awt.Desktop.Action.BROWSE)) {
+						dp.browse(uri);// 获取系统默认浏览器打开链接
+					}
+				} catch (java.lang.NullPointerException e1) {
+					// 此为uri为空时抛出异常
+					e1.printStackTrace();
+				} catch (java.io.IOException e1) {
+					// 此为无法获取系统默认浏览器
+					e1.printStackTrace();
+				}
+
+			}
+		});
 		bar.add(helpMenu);
 
 		this.setJMenuBar(bar);
-
-		
-
 
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -274,31 +320,79 @@ public class MainFrame extends JFrame {
 				MainFrame.this.requestFocus();
 			}
 		});
-		
+
 		myPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				MainFrame.this.requestFocus();
 			}
 		});
-		
+
 		addKeyListener(new KeyAdapter() {
+
+			class KeyTimer extends Timer {
+
+				private int id;
+				private double value;
+
+				public KeyTimer(int id, double value) {
+					super(50, null);
+					this.id = id;
+					this.value = value;
+				}
+
+				@Override
+				protected void fireActionPerformed(ActionEvent e) {
+					double v = settingPanel.settings.get(id).getCurrentValue();
+					settingPanel.settings.get(id).setCurrentValue(Utils.add(v, value), Source.Key, true);
+
+				}
+
+			}
+
+			KeyTimer addX = new KeyTimer(2, 0.1);
+			KeyTimer minusX = new KeyTimer(2, -0.1);
+			KeyTimer addY = new KeyTimer(3, 0.1);
+			KeyTimer minusY = new KeyTimer(3, -0.1);
+
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				switch (arg0.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					
+				case KeyEvent.VK_RIGHT:
+					addX.setRepeats(true);
+					addX.start();
 					break;
-				default:
-					System.out.println(arg0.getKeyCode());
+				case KeyEvent.VK_LEFT:
+					minusX.setRepeats(true);
+					minusX.start();
+					break;
+				case KeyEvent.VK_UP:
+					addY.setRepeats(true);
+					addY.start();
+					break;
+				case KeyEvent.VK_DOWN:
+					minusY.setRepeats(true);
+					minusY.start();
 					break;
 				}
 			}
 
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				double v = settingPanel.settings.get(3).getCurrentValue();
-				settingPanel.settings.get(3).setCurrentValue(v+2, Source.Key, true);
+				switch (arg0.getKeyCode()) {
+				case KeyEvent.VK_RIGHT:
+					addX.stop();
+					break;
+				case KeyEvent.VK_LEFT:
+					minusX.stop();
+					break;
+				case KeyEvent.VK_UP:
+					addY.stop();
+					break;
+				case KeyEvent.VK_DOWN:
+					minusY.stop();
+					break;
+				}
 			}
 
 		});
@@ -324,11 +418,14 @@ public class MainFrame extends JFrame {
 
 				FunctionDialog functionDialog = new FunctionDialog(MainFrame.this, "修改函数", map.get(editItem));
 				functionDialog.setVisible(true);
-				myPanel.fun.set(myPanel.fun.indexOf(map.get(editItem)), functionDialog.fun);
-				myPanel.repaint();
-				editItem.setText(functionDialog.fun.toString());
-				deleteItem.setText(functionDialog.fun.toString());
-				map.put(editItem, functionDialog.fun);
+				if (functionDialog.fun != null) {
+					myPanel.fun.set(myPanel.fun.indexOf(map.get(editItem)), functionDialog.fun);
+					myPanel.repaint();
+					editItem.setText(functionDialog.fun.toString());
+					deleteItem.setText(functionDialog.fun.toString());
+					map.put(editItem, functionDialog.fun);
+				}
+
 			}
 		});
 		// 删除函数

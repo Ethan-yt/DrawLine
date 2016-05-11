@@ -2,21 +2,15 @@ package J1030414414.GUI;
 
 import java.awt.*;
 import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
 import javax.swing.JPanel;
 
 import J1030414414.Function;
@@ -29,6 +23,8 @@ public class GraphicPanel extends JPanel {
 	public OriginPoint o = new OriginPoint();// 保存坐标原点以便转换
 	public ArrayList<Function> fun = new ArrayList<>();
 
+	private boolean isSignVisible = true;
+	
 	private double dpiX, dpiY, // xy轴单位坐标所占像素
 			minDivX, minDivY;// xy轴的最小分度值
 
@@ -69,15 +65,19 @@ public class GraphicPanel extends JPanel {
 		this.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mousePressed(MouseEvent e) {
-				int x = e.getX();
-				int y = e.getY();
-				if(x >= signsRect.getX() && x <= signsRect.getX() + signsRect.getWidth() && y >= signsRect.getY()
-						&& y <= signsRect.getY() + signsRect.getHeight())
+				if(isSignVisible)
 				{
-					double dx = x - signsRect.getX();
-					double dy = y - signsRect.getY();
-					mouseDownRelativeLoc.setLocation(dx, dy);
+					int x = e.getX();
+					int y = e.getY();
+					if(x >= signsRect.getX() && x <= signsRect.getX() + signsRect.getWidth() && y >= signsRect.getY()
+							&& y <= signsRect.getY() + signsRect.getHeight())
+					{
+						double dx = x - signsRect.getX();
+						double dy = y - signsRect.getY();
+						mouseDownRelativeLoc.setLocation(dx, dy);
+					}
 				}
+
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -123,14 +123,15 @@ public class GraphicPanel extends JPanel {
 			// 绘制曲线
 			paintLine(g2d, f, maxScale[0], maxScale[1]);
 			// 绘制图例
-			paintSigns(g2d, expression, i);
+			if(isSignVisible)
+				paintSigns(g2d, expression, i);
 			// 获取最大图例宽度以便确定图例边框大小
 			int thisWidth = g2d.getFontMetrics().stringWidth(expression);
 			if (thisWidth > width)
 				width = thisWidth;
 		}
 		// 绘制图例边框
-		if (fun.size() != 0) {
+		if (isSignVisible && fun.size() != 0) {
 			signsRect.setSize(85 + width, 30 * fun.size() + 10);
 			g2d.setStroke(new BasicStroke(2));
 			g2d.setPaint(Color.BLACK);
@@ -238,6 +239,15 @@ public class GraphicPanel extends JPanel {
 		double y = signsRect.getY() + 20 + 30 * index;
 		g2d.draw(new Line2D.Double(signsRect.getX() + 10, y, signsRect.getX() + 40, y));
 		g2d.drawString(expression, (int) signsRect.getX() + 60, (int) y + 5);
+	}
+
+	public boolean isSignVisible() {
+		return isSignVisible;
+	}
+
+	public void setSignVisible(boolean isSignVisible) {
+		this.isSignVisible = isSignVisible;
+		repaint();
 	}
 
 }
