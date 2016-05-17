@@ -22,6 +22,14 @@
 版本更新
 ----------
 
+V1.2
+
+ - 引入界面库[beautyeye](https://github.com/JackJiang2011/beautyeye)
+ - 修改插入函数界面
+ - 增加参考线，增加鼠标指示
+ - 其他bug的修复
+
+----------
 V1.1 实验三版本
 
  - 加入菜单栏。
@@ -57,3 +65,8 @@ V1.0 实验二版本
 1. DrawLine 类，程序入口
 2.	Function类，Serializable接口，N阶函数，存储了每项的系数，可以由x值获得相应的y值。存储了函数的笔刷，颜色。
 3.	Utils类，工具类，包含高精度运算，正则表达式处理文本，坐标变换等。
+
+----------
+使用的其他开源库
+----------
+ - [beautyeye](https://github.com/JackJiang2011/beautyeye)
