@@ -49,10 +49,11 @@ public class MainFrameSettings extends JPanel {
 		settings.add(new Setting(3, axisSetting, axisSettingLayout, "Y轴分度值", 2));
 
 		JCheckBox autoSetChk = new JCheckBox("自动设置分辨率");
+		
 		axisSetting.add(autoSetChk);
 
 		JTextArea hintText = new JTextArea(
-				"温馨提示：\r\n自动设置分辨率可以锁定刻度线\r\n点击绘图区后，按键盘上下左右调整坐标轴分度值\r\n图例可以拖动");
+				"温馨提示：\r\n1.自动设置分辨率可以锁定刻度线。\r\n2.点击绘图区后，按键盘上下左右调整坐标轴分度值。\r\n3.图例可以拖动。");
 		hintText.setEditable(false);
 		hintText.setLineWrap(true);
 		hintText.setWrapStyleWord(true);
@@ -78,6 +79,7 @@ public class MainFrameSettings extends JPanel {
 				settings.get(3).setAutoSetting(!enabled);
 			}
 		});
+		autoSetChk.setSelected(true);
 	}
 
 	// 内部类Setting为每一个项设置

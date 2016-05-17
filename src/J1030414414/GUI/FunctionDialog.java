@@ -24,27 +24,37 @@ public class FunctionDialog extends JDialog {
 	float[] dashes = null;
 
 	public FunctionDialog(JFrame owner, String title) {
-		super(owner,title);
+		super(owner, title);
 		initUI(owner);
 	}
-	
-	public FunctionDialog(JFrame owner, String title,Function f) {
-		super(owner,title);
+
+	public FunctionDialog(JFrame owner, String title, Function f) {
+		super(owner, title);
 		fun = f;
 		initUI(owner);
 	}
-	
-	private void initUI(JFrame owner)
-	{
-		setSize(300, 300);
+
+	private void initUI(JFrame owner) {
+		setSize(400, 500);
 		setModal(true);// 模态对话框
 		setLocationRelativeTo(owner); // 窗体居中
 
 		Container container = getContentPane();
-		container.setLayout(new BorderLayout());
+		JPanel comp = new JPanel();
+		container.add(comp);
+		comp.setLayout(new BorderLayout(10, 10));
+		JPanel content = new JPanel();
+		content.setLayout(new BorderLayout(10, 10));
+
+		comp.add(content, BorderLayout.CENTER);
+		comp.add(new JPanel(), BorderLayout.NORTH);
+		comp.add(new JPanel(), BorderLayout.SOUTH);
+		comp.add(new JPanel(), BorderLayout.EAST);
+		comp.add(new JPanel(), BorderLayout.WEST);
 		Box box = Box.createVerticalBox();
-		container.add(box, BorderLayout.NORTH);		
-		
+
+		content.add(box, BorderLayout.NORTH);
+
 		// -----------------样式设置--------------------------------
 		JPanel styleSetting = new JPanel(new BorderLayout(10, 10));
 		styleSetting.setBorder(BorderFactory.createTitledBorder("样式"));
@@ -61,7 +71,8 @@ public class FunctionDialog extends JDialog {
 				Graphics2D g2d = (Graphics2D) g;
 				g2d.setColor(color);
 				g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10, dashes, 0));
-				g2d.draw(new Line2D.Double(30, y, 250, y));
+				g2d.draw(new Line2D.Double(30, y, this.getWidth() - 30, y));
+
 			}
 		};
 
@@ -120,19 +131,23 @@ public class FunctionDialog extends JDialog {
 		// ------------------格式说明------------------------------------
 		JPanel hint = new JPanel(new GridLayout(1, 1));
 		hint.setBorder(BorderFactory.createTitledBorder("格式说明"));
-		JTextArea hintText = new JTextArea(
-				"笔刷格式：[实线长度][,][虚线长度]...，留空为实线" + "\r\n" + "表达式格式：表达式由若干项组成，每项为[系数]x[指数]，项与项用[+]或[-]连接，所有数字均为正整数。");
+		JTextArea hintText = new JTextArea("笔刷格式：" + "\r\n" + "[实线长度][,][虚线长度]...，留空为实线" + "\r\n\r\n" + "表达式格式："
+				+ "\r\n" + "表达式由若干项组成，项与项用[+]或[-]连接，所有数字均为正整数。" + "\r\n\r\n" + "支持的项：" + "\r\n" + "1)[系数]x[指数]");
 		hintText.setEditable(false);
 		hintText.setLineWrap(true);
 		hintText.setWrapStyleWord(true);
-		hint.add(hintText);
-		container.add(hint, BorderLayout.CENTER);
+
+		JScrollPane scroll = new JScrollPane(hintText);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+		hint.add(scroll);
+		content.add(hint, BorderLayout.CENTER);
 		// -----------------按钮--------------------------------
 		JPanel btns = new JPanel(new GridLayout(1, 3, 10, 10));
 		JButton okBtn = new JButton("确认");
 		JButton cancelBtn = new JButton("取消");
 		JButton randomBtn = new JButton("随机");
-		//取消
+		// 取消
 		cancelBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -140,7 +155,7 @@ public class FunctionDialog extends JDialog {
 				FunctionDialog.this.setVisible(false);
 			}
 		});
-		//确认
+		// 确认
 		okBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -150,7 +165,7 @@ public class FunctionDialog extends JDialog {
 					fun.setDashes(dashes);
 					FunctionDialog.this.setVisible(false);
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null,"公式格式有误，请参考格式说明或者随机生成");
+					JOptionPane.showMessageDialog(null, "公式格式有误，请参考格式说明或者随机生成");
 				}
 			}
 		});
@@ -191,16 +206,16 @@ public class FunctionDialog extends JDialog {
 		btns.add(randomBtn);
 		btns.add(cancelBtn);
 
-		container.add(btns, BorderLayout.SOUTH);
+		content.add(btns, BorderLayout.SOUTH);
 		setResizable(false);
 
 		if (fun != null)// 载入将要修改的函数
 		{
 			dashes = fun.getDashes();
 			if (dashes != null && dashes.length > 0) {
-				String str = String.valueOf((int)dashes[0]);
+				String str = String.valueOf((int) dashes[0]);
 				for (int i = 1; i < dashes.length; i++)
-					str += "," + (int)dashes[i];
+					str += "," + (int) dashes[i];
 
 				((JTextField) dashesBox.getEditor().getEditorComponent()).setText(str);
 			}
@@ -209,7 +224,7 @@ public class FunctionDialog extends JDialog {
 			view.repaint();
 		}
 	}
-	
+
 	private float[] parseDashes(String str) throws Exception {
 		if (str.equals(""))
 			return null;

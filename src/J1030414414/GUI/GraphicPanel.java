@@ -24,11 +24,14 @@ public class GraphicPanel extends JPanel {
 	public ArrayList<Function> fun = new ArrayList<>();
 
 	private boolean isSignVisible = true;
-	
+	private boolean isReferenceLineVisible = true;
+	private boolean isMouseLocVisible = true;
+	private Point2D mouseLoc = new Point2D.Double();
+
 	private double dpiX, dpiY, // xy轴单位坐标所占像素
 			minDivX, minDivY;// xy轴的最小分度值
 
-	private Rectangle signsRect = new Rectangle(600,500,0,0);
+	private Rectangle signsRect = new Rectangle(600, 500, 0, 0);
 
 	public void setUnitLenX(double unitLenX) {
 		this.dpiX = unitLenX;
@@ -47,8 +50,7 @@ public class GraphicPanel extends JPanel {
 	}
 
 	public GraphicPanel() {
-		
-		
+
 		// -------------------自动设置原点居中------------------------------
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -62,16 +64,14 @@ public class GraphicPanel extends JPanel {
 
 		// ------------------鼠标拖拽图例-------------------------
 		final Point2D mouseDownRelativeLoc = new Point2D.Double();
-		this.addMouseListener(new MouseAdapter(){
+		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(isSignVisible)
-				{
+				if (isSignVisible) {
 					int x = e.getX();
 					int y = e.getY();
-					if(x >= signsRect.getX() && x <= signsRect.getX() + signsRect.getWidth() && y >= signsRect.getY()
-							&& y <= signsRect.getY() + signsRect.getHeight())
-					{
+					if (x >= signsRect.getX() && x <= signsRect.getX() + signsRect.getWidth() && y >= signsRect.getY()
+							&& y <= signsRect.getY() + signsRect.getHeight()) {
 						double dx = x - signsRect.getX();
 						double dy = y - signsRect.getY();
 						mouseDownRelativeLoc.setLocation(dx, dy);
@@ -79,26 +79,38 @@ public class GraphicPanel extends JPanel {
 				}
 
 			}
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				mouseDownRelativeLoc.setLocation(-1, -1);
 			}
-			
+
 		});
-		
+
 		this.addMouseMotionListener(new MouseMotionAdapter() {
-			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// 鼠标提示
+				if (isMouseLocVisible) {
+					mouseLoc = e.getPoint();
+					GraphicPanel.this.repaint();
+				}
+
+			}
+
 			@Override
 			public void mouseDragged(MouseEvent e) {
+				// 拖动图例
 				int x = e.getX();
 				int y = e.getY();
 				if (mouseDownRelativeLoc.getX() >= 0) {
-					int dx = (int)mouseDownRelativeLoc.getX();
-					int dy = (int)mouseDownRelativeLoc.getY();
+					int dx = (int) mouseDownRelativeLoc.getX();
+					int dy = (int) mouseDownRelativeLoc.getY();
 					signsRect.setLocation(x - dx, y - dy);
 					GraphicPanel.this.repaint();
 				}
 			}
+
 		});
 		setBackground(Color.WHITE);
 	}
@@ -123,7 +135,7 @@ public class GraphicPanel extends JPanel {
 			// 绘制曲线
 			paintLine(g2d, f, maxScale[0], maxScale[1]);
 			// 绘制图例
-			if(isSignVisible)
+			if (isSignVisible)
 				paintSigns(g2d, expression, i);
 			// 获取最大图例宽度以便确定图例边框大小
 			int thisWidth = g2d.getFontMetrics().stringWidth(expression);
@@ -137,11 +149,20 @@ public class GraphicPanel extends JPanel {
 			g2d.setPaint(Color.BLACK);
 			g2d.draw(signsRect);
 		}
+		// 绘制鼠标提示
+		if (isMouseLocVisible) {
+			Point2D p = o.r(mouseLoc.getX(), mouseLoc.getY());
+			String str = "(" + String.format("%.2f", p.getX() / dpiX) + "," + String.format("%.2f", p.getY() / dpiY)
+					+ ")";
+			g2d.setPaint(Color.BLACK);
+			g2d.setFont(new Font("楷体", Font.PLAIN, 16));
+			g2d.drawString(str, (int) mouseLoc.getX(), (int) mouseLoc.getY());
+
+		}
 	}
 
 	// 绘制坐标轴，返回{x最大刻度,y最大刻度}
 	private double[] paintAxis(Graphics2D g2d, double Xlen, double Ylen) {
-
 		// 宽度为2的黑色坐标轴
 		g2d.setPaint(Color.BLACK);
 		g2d.setStroke(new BasicStroke(2));
@@ -185,11 +206,22 @@ public class GraphicPanel extends JPanel {
 				* dpiX) {
 			for (int i = 1; i >= -1; i -= 2)// i为正负
 			{
+				g2d.setPaint(Color.BLACK);
 				g2d.draw(new Line2D.Double(o.c(i * d, 0), o.c(i * d, 5)));
 				Point2D p4 = o.c(i * d, -15);
 				String str = Utils.DoubleToString(i * count);
 				int strWidth = g2d.getFontMetrics().stringWidth(str);
 				g2d.drawString(str, (float) p4.getX() - strWidth / 2, (float) p4.getY());
+
+				// 参考线
+				if (isReferenceLineVisible) {
+					g2d.setPaint(Color.gray);
+					g2d.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10,
+							new float[] { 3, 3 }, 0));
+					g2d.draw(new Line2D.Double(o.c(i * d, -Ylen), o.c(i * d, Ylen)));
+
+				}
+
 			}
 		}
 		ret[0] = count - minDivX;
@@ -198,11 +230,20 @@ public class GraphicPanel extends JPanel {
 				* dpiY) {
 			for (int i = 1; i >= -1; i -= 2)// i为正负
 			{
+				g2d.setPaint(Color.BLACK);
 				g2d.draw(new Line2D.Double(o.c(0, i * d), o.c(5, i * d)));
 				Point2D p4 = o.c(0, i * d);
 				String str = Utils.DoubleToString(i * count);
 				int strWidth = g2d.getFontMetrics().stringWidth(str);
 				g2d.drawString(str, (float) p4.getX() - strWidth - 3, (float) p4.getY() + 7);
+				// 参考线
+				if (isReferenceLineVisible) {
+					g2d.setPaint(Color.gray);
+					g2d.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10,
+							new float[] { 3, 3 }, 0));
+					g2d.draw(new Line2D.Double(o.c(-Xlen, i * d), o.c(Xlen, i * d)));
+				}
+
 			}
 		}
 		ret[1] = count - minDivY;
@@ -212,7 +253,9 @@ public class GraphicPanel extends JPanel {
 	private void paintLine(Graphics2D g2d, Function fun, double maxScaleX, double maxScaleY) {
 		g2d.setColor(fun.getColor());
 		g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10, fun.getDashes(), 0));
-		final double unit = 0.1;// 微分长度
+		final double unit = minDivX / 50;// 微分长度
+		maxScaleX += minDivX;
+		maxScaleY += minDivY;
 		double x = -maxScaleX;
 		double y;
 		while (x < maxScaleX) {
@@ -247,6 +290,24 @@ public class GraphicPanel extends JPanel {
 
 	public void setSignVisible(boolean isSignVisible) {
 		this.isSignVisible = isSignVisible;
+		repaint();
+	}
+
+	public boolean isReferenceLineVisible() {
+		return isReferenceLineVisible;
+	}
+
+	public void setReferenceLineVisible(boolean isReferenceLineVisible) {
+		this.isReferenceLineVisible = isReferenceLineVisible;
+		repaint();
+	}
+
+	public boolean isMouseLocVisible() {
+		return isMouseLocVisible;
+	}
+
+	public void setMouseLocVisible(boolean isMouseLocVisible) {
+		this.isMouseLocVisible = isMouseLocVisible;
 		repaint();
 	}
 

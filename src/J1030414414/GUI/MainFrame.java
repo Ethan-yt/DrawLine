@@ -116,11 +116,11 @@ public class MainFrame extends JFrame {
 		file_exit.setMnemonic('X');
 		fileMenu.add(file_exit);
 		file_exit.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				MainFrame.this.dispose();
-				
+
 			}
 		});
 		bar.add(fileMenu);
@@ -276,6 +276,34 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean enable = view_Signs.isSelected();
 				myPanel.setSignVisible(enable);
+			}
+		});
+
+		JCheckBoxMenuItem view_Refer = new JCheckBoxMenuItem("参考线(S)");
+		view_Refer.setMnemonic('R');
+		view_Refer.setSelected(true);
+		viewMenu.add(view_Refer);
+
+		view_Refer.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				boolean enable = view_Refer.isSelected();
+				myPanel.setReferenceLineVisible(enable);
+			}
+		});
+
+		JCheckBoxMenuItem view_MouseLoc = new JCheckBoxMenuItem("鼠标指示(S)");
+		view_MouseLoc.setMnemonic('M');
+		view_MouseLoc.setSelected(true);
+		viewMenu.add(view_MouseLoc);
+
+		view_MouseLoc.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				boolean enable = view_MouseLoc.isSelected();
+				myPanel.setMouseLocVisible(enable);
 			}
 		});
 
