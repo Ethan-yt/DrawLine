@@ -1,6 +1,4 @@
----
-typora-copy-images-to: ipic
----
+
 
 
 #DrawLine 多项式绘图
