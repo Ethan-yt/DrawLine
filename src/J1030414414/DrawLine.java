@@ -26,13 +26,13 @@ public class DrawLine {
 			org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
 			UIManager.put("RootPane.setupButtonVisible", false);
 
-			// µ÷ÕûÄ¬ÈÏ×ÖÌå
+			// è°ƒæ•´é»˜è®¤å­—ä½“
 			for (int i = 0; i < DEFAULT_FONT.length; i++)
-				UIManager.put(DEFAULT_FONT[i], new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
+				UIManager.put(DEFAULT_FONT[i], new Font("å¾®è½¯é›…é»‘", Font.PLAIN, 14));
 		} catch (Exception e) {
 			try {
 				for (int i = 0; i < DEFAULT_FONT.length; i++)
-					UIManager.put(DEFAULT_FONT[i], new Font("¿¬Ìå", Font.PLAIN, 14));
+					UIManager.put(DEFAULT_FONT[i], new Font("æ¥·ä½“", Font.PLAIN, 14));
 			} catch (Exception e0) {
 			}
 		}

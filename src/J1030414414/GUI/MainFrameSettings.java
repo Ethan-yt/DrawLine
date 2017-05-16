@@ -39,21 +39,21 @@ public class MainFrameSettings extends JPanel {
 		JPanel axisSetting = new JPanel();
 		add(axisSetting, BorderLayout.NORTH);
 
-		axisSetting.setBorder(BorderFactory.createTitledBorder("×ø±êÖáÉèÖÃ"));
+		axisSetting.setBorder(BorderFactory.createTitledBorder("åæ ‡è½´è®¾ç½®"));
 		GridBagLayout axisSettingLayout = new GridBagLayout();
 		axisSetting.setLayout(axisSettingLayout);
 
-		settings.add(new Setting(0, axisSetting, axisSettingLayout, "XÖá·Ö±æÂÊ", 100));
-		settings.add(new Setting(1, axisSetting, axisSettingLayout, "YÖá·Ö±æÂÊ", 15));
-		settings.add(new Setting(2, axisSetting, axisSettingLayout, "XÖá·Ö¶ÈÖµ", 0.5));
-		settings.add(new Setting(3, axisSetting, axisSettingLayout, "YÖá·Ö¶ÈÖµ", 2));
+		settings.add(new Setting(0, axisSetting, axisSettingLayout, "Xè½´åˆ†è¾¨ç‡", 100));
+		settings.add(new Setting(1, axisSetting, axisSettingLayout, "Yè½´åˆ†è¾¨ç‡", 15));
+		settings.add(new Setting(2, axisSetting, axisSettingLayout, "Xè½´åˆ†åº¦å€¼", 0.5));
+		settings.add(new Setting(3, axisSetting, axisSettingLayout, "Yè½´åˆ†åº¦å€¼", 2));
 
-		JCheckBox autoSetChk = new JCheckBox("×Ô¶¯ÉèÖÃ·Ö±æÂÊ");
+		JCheckBox autoSetChk = new JCheckBox("è‡ªåŠ¨è®¾ç½®åˆ†è¾¨ç‡");
 		
 		axisSetting.add(autoSetChk);
 
 		JTextArea hintText = new JTextArea(
-				"ÎÂÜ°ÌáÊ¾£º\r\n1.×Ô¶¯ÉèÖÃ·Ö±æÂÊ¿ÉÒÔËø¶¨¿Ì¶ÈÏß¡£\r\n2.µã»÷»æÍ¼Çøºó£¬°´¼üÅÌÉÏÏÂ×óÓÒµ÷Õû×ø±êÖá·Ö¶ÈÖµ¡£\r\n3.Í¼Àı¿ÉÒÔÍÏ¶¯¡£");
+				"æ¸©é¦¨æç¤ºï¼š\r\n1.è‡ªåŠ¨è®¾ç½®åˆ†è¾¨ç‡å¯ä»¥é”å®šåˆ»åº¦çº¿ã€‚\r\n2.ç‚¹å‡»ç»˜å›¾åŒºåï¼ŒæŒ‰é”®ç›˜ä¸Šä¸‹å·¦å³è°ƒæ•´åæ ‡è½´åˆ†åº¦å€¼ã€‚\r\n3.å›¾ä¾‹å¯ä»¥æ‹–åŠ¨ã€‚");
 		hintText.setEditable(false);
 		hintText.setLineWrap(true);
 		hintText.setWrapStyleWord(true);
@@ -69,7 +69,7 @@ public class MainFrameSettings extends JPanel {
 		axisSettingLayout.setConstraints(hintText, c);
 		autoSetChk.addItemListener(new ItemListener() {
 
-			// Ôö¼ÓÒ»¸ö¼àÌıÆ÷ÒÔ±ã×Ô¶¯ÉèÖÃ·Ö¶ÈÖµ
+			// å¢åŠ ä¸€ä¸ªç›‘å¬å™¨ä»¥ä¾¿è‡ªåŠ¨è®¾ç½®åˆ†åº¦å€¼
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				boolean enabled = !autoSetChk.isSelected();
@@ -82,10 +82,10 @@ public class MainFrameSettings extends JPanel {
 		autoSetChk.setSelected(true);
 	}
 
-	// ÄÚ²¿ÀàSettingÎªÃ¿Ò»¸öÏîÉèÖÃ
+	// å†…éƒ¨ç±»Settingä¸ºæ¯ä¸€ä¸ªé¡¹è®¾ç½®
 	class Setting {
 		
-		private double unit = 0.1;// ×îĞ¡ÉèÖÃµ¥Î»
+		private double unit = 0.1;// æœ€å°è®¾ç½®å•ä½
 		
 		private int id;
 		private String name;
@@ -105,7 +105,7 @@ public class MainFrameSettings extends JPanel {
 		private double max=2;
 
 		private boolean autoSetting = false;
-		//setSliderFlagÎªfalseÊ± ²»´¥·¢SliderÊÂ¼ş
+		//setSliderFlagä¸ºfalseæ—¶ ä¸è§¦å‘Slideräº‹ä»¶
 		private boolean setSliderFlag = true;
 		
 		public Setting(int id, JPanel panel, GridBagLayout layout, String name, double defaultValue) {
@@ -121,8 +121,8 @@ public class MainFrameSettings extends JPanel {
 				s = new JSlider(50,100);
 			else
 				s = new JSlider(0, (int) (max / unit));
-			b = new JButton("Ä¬ÈÏÖµ");
-			// TextFieldµÄ¸Ä±äÓëSliderÍ¬²½
+			b = new JButton("é»˜è®¤å€¼");
+			// TextFieldçš„æ”¹å˜ä¸SlideråŒæ­¥
 			t.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
@@ -136,7 +136,7 @@ public class MainFrameSettings extends JPanel {
 				}
 			});
 
-			// SliderµÄ¸Ä±äÓëTextFieldÍ¬²½
+			// Sliderçš„æ”¹å˜ä¸TextFieldåŒæ­¥
 
 			s.addChangeListener(new ChangeListener() {
 				@Override
@@ -148,7 +148,7 @@ public class MainFrameSettings extends JPanel {
 					}
 				}
 			});
-			// ÉèÖÃÄ¬ÈÏÖµ
+			// è®¾ç½®é»˜è®¤å€¼
 			b.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -182,17 +182,17 @@ public class MainFrameSettings extends JPanel {
 		
 		
 		private void setCurrentValue(double value, Source none) {
-			//Ä¬ÈÏ²»Ç¿ÖÆ·Å´ó
+			//é»˜è®¤ä¸å¼ºåˆ¶æ”¾å¤§
 			setCurrentValue(value, none, false);
 		}
 		
 		public void setCurrentValue(double value,Source source,boolean forceZoom){
-			if (!forceZoom && value > max) // ÈôÇ¿ÖÆ·Å´óÔò²»¼ì²é×î´óÖµÊÇ·ñºÏ·¨
+			if (!forceZoom && value > max) // è‹¥å¼ºåˆ¶æ”¾å¤§åˆ™ä¸æ£€æŸ¥æœ€å¤§å€¼æ˜¯å¦åˆæ³•
 				value = max;
 			else if (value < min)
 				value = min;
 			System.out.println(id+":"+value+":"+source);
-			//ÉèÖÃ·Ö¶ÈÖµÊ± ¸Ä±ä·Ö±æÂÊµÄ¿ÉÑ¡·¶Î§
+			//è®¾ç½®åˆ†åº¦å€¼æ—¶ æ”¹å˜åˆ†è¾¨ç‡çš„å¯é€‰èŒƒå›´
 			
 			if(id > 1 )
 			{
@@ -203,14 +203,14 @@ public class MainFrameSettings extends JPanel {
 				dpi.defaultValue = dpi.min =Utils.mul( dpi.unit,dpiSliderMin);
 				dpi.max =Utils.mul( dpi.unit,dpiSliderMax);
 				System.out.println("min:" + dpi.min + "  max:"+ dpi.max);
-				//×Ô¶¯ÅäÖÃ·Ö±æÂÊ
+				//è‡ªåŠ¨é…ç½®åˆ†è¾¨ç‡
 				if(autoSetting)
 					dpi.setCurrentValue(dpi.unit * dpi.s.getValue(),Source.AutoSetting);
 				else
 					dpi.setCurrentValue(dpi.currentValue);
 			}
 			
-			//²Ù×÷À´×ÔSliderÊ±²»ÉèÖÃSlider
+			//æ“ä½œæ¥è‡ªSlideræ—¶ä¸è®¾ç½®Slider
 			if(source != Source.JSlider)
 			{
 				setSliderFlag = false;
@@ -222,21 +222,21 @@ public class MainFrameSettings extends JPanel {
 				}
 				setSliderFlag = true;
 			}
-			//²Ù×÷À´×ÔTextFieldÊ±²»ÉèÖÃTextField
+			//æ“ä½œæ¥è‡ªTextFieldæ—¶ä¸è®¾ç½®TextField
 			if(source != Source.JTextField)
 				t.setText(String.format("%.2f", value));
 
 			switch (name) {
-			case "XÖá·Ö±æÂÊ":
+			case "Xè½´åˆ†è¾¨ç‡":
 				myPanel.setUnitLenX(value);
 				break;
-			case "YÖá·Ö±æÂÊ":
+			case "Yè½´åˆ†è¾¨ç‡":
 				myPanel.setUnitLenY(value);
 				break;
-			case "XÖá·Ö¶ÈÖµ":
+			case "Xè½´åˆ†åº¦å€¼":
 				myPanel.setMinDivX(value);
 				break;
-			case "YÖá·Ö¶ÈÖµ":
+			case "Yè½´åˆ†åº¦å€¼":
 				myPanel.setMinDivY(value);
 				break;
 			}
@@ -244,7 +244,7 @@ public class MainFrameSettings extends JPanel {
 			currentValue = value;
 			myPanel.repaint();
 		}
-		// ÆôÓÃ/Í£ÓÃÉèÖÃ
+		// å¯ç”¨/åœç”¨è®¾ç½®
 		public void setEnabled(boolean arg0) {
 			s.setEnabled(arg0);
 			t.setEnabled(arg0);
@@ -252,9 +252,9 @@ public class MainFrameSettings extends JPanel {
 			b.setEnabled(arg0);
 		}
 
-		// ×Ô¶¯ÅäÖÃ·Ö±æÂÊ
+		// è‡ªåŠ¨é…ç½®åˆ†è¾¨ç‡
 		public void setAutoSetting(boolean arg0) {
-			if (id <2)// Ö»ÓĞ2,3ºÅÉèÖÃÏî(·Ö¶ÈÖµÉèÖÃ)¿ÉÒÔ×Ô¶¯ÅäÖÃ·Ö±æÂÊÉèÖÃÏî
+			if (id <2)// åªæœ‰2,3å·è®¾ç½®é¡¹(åˆ†åº¦å€¼è®¾ç½®)å¯ä»¥è‡ªåŠ¨é…ç½®åˆ†è¾¨ç‡è®¾ç½®é¡¹
 				return;
 			autoSetting  = arg0;
 		}

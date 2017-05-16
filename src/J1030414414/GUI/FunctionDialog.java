@@ -36,8 +36,8 @@ public class FunctionDialog extends JDialog {
 
 	private void initUI(JFrame owner) {
 		setSize(400, 500);
-		setModal(true);// Ä£Ì¬¶Ô»°¿ò
-		setLocationRelativeTo(owner); // ´°Ìå¾ÓÖĞ
+		setModal(true);// æ¨¡æ€å¯¹è¯æ¡†
+		setLocationRelativeTo(owner); // çª—ä½“å±…ä¸­
 
 		Container container = getContentPane();
 		JPanel comp = new JPanel();
@@ -55,11 +55,11 @@ public class FunctionDialog extends JDialog {
 
 		content.add(box, BorderLayout.NORTH);
 
-		// -----------------ÑùÊ½ÉèÖÃ--------------------------------
+		// -----------------æ ·å¼è®¾ç½®--------------------------------
 		JPanel styleSetting = new JPanel(new BorderLayout(10, 10));
-		styleSetting.setBorder(BorderFactory.createTitledBorder("ÑùÊ½"));
-		JButton colorBtn = new JButton("ÑÕÉ«...");
-		JLabel l = new JLabel("±ÊË¢£º");
+		styleSetting.setBorder(BorderFactory.createTitledBorder("æ ·å¼"));
+		JButton colorBtn = new JButton("é¢œè‰²...");
+		JLabel l = new JLabel("ç¬”åˆ·ï¼š");
 		JComboBox<String> dashesBox = new JComboBox<String>(new String[] { "", "10,3", "10,3,3,3" });
 		dashesBox.setEditable(true);
 
@@ -79,7 +79,7 @@ public class FunctionDialog extends JDialog {
 		colorBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Color c = JColorChooser.showDialog(null, "ÇëÑ¡ÔñÄãÏ²»¶µÄÑÕÉ«", color);
+				Color c = JColorChooser.showDialog(null, "è¯·é€‰æ‹©ä½ å–œæ¬¢çš„é¢œè‰²", color);
 				if (c != null)
 					FunctionDialog.this.color = c;
 				view.repaint();
@@ -120,19 +120,19 @@ public class FunctionDialog extends JDialog {
 
 		box.add(styleSetting);
 
-		// -----------------º¯Êı±í´ïÊ½--------------------------------
+		// -----------------å‡½æ•°è¡¨è¾¾å¼--------------------------------
 		JPanel expSetting = new JPanel(new GridLayout(1, 1));
 		Box expBox = Box.createVerticalBox();
-		expSetting.setBorder(BorderFactory.createTitledBorder("º¯Êı±í´ïÊ½"));
+		expSetting.setBorder(BorderFactory.createTitledBorder("å‡½æ•°è¡¨è¾¾å¼"));
 		JTextField expText = new JTextField("");
 		expBox.add(expText);
 		expSetting.add(expBox);
 		box.add(expSetting);
-		// ------------------¸ñÊ½ËµÃ÷------------------------------------
+		// ------------------æ ¼å¼è¯´æ˜------------------------------------
 		JPanel hint = new JPanel(new GridLayout(1, 1));
-		hint.setBorder(BorderFactory.createTitledBorder("¸ñÊ½ËµÃ÷"));
-		JTextArea hintText = new JTextArea("±ÊË¢¸ñÊ½£º" + "\r\n" + "[ÊµÏß³¤¶È][,][ĞéÏß³¤¶È]...£¬Áô¿ÕÎªÊµÏß" + "\r\n\r\n" + "±í´ïÊ½¸ñÊ½£º"
-				+ "\r\n" + "±í´ïÊ½ÓÉÈô¸ÉÏî×é³É£¬ÏîÓëÏîÓÃ[+]»ò[-]Á¬½Ó£¬ËùÓĞÊı×Ö¾ùÎªÕıÕûÊı¡£" + "\r\n\r\n" + "Ö§³ÖµÄÏî£º" + "\r\n" + "1)[ÏµÊı]x[Ö¸Êı]");
+		hint.setBorder(BorderFactory.createTitledBorder("æ ¼å¼è¯´æ˜"));
+		JTextArea hintText = new JTextArea("ç¬”åˆ·æ ¼å¼ï¼š" + "\r\n" + "[å®çº¿é•¿åº¦][,][è™šçº¿é•¿åº¦]...ï¼Œç•™ç©ºä¸ºå®çº¿" + "\r\n\r\n" + "è¡¨è¾¾å¼æ ¼å¼ï¼š"
+				+ "\r\n" + "è¡¨è¾¾å¼ç”±è‹¥å¹²é¡¹ç»„æˆï¼Œé¡¹ä¸é¡¹ç”¨[+]æˆ–[-]è¿æ¥ï¼Œæ‰€æœ‰æ•°å­—å‡ä¸ºæ­£æ•´æ•°ã€‚" + "\r\n\r\n" + "æ”¯æŒçš„é¡¹ï¼š" + "\r\n" + "1)[ç³»æ•°]x[æŒ‡æ•°]");
 		hintText.setEditable(false);
 		hintText.setLineWrap(true);
 		hintText.setWrapStyleWord(true);
@@ -142,12 +142,12 @@ public class FunctionDialog extends JDialog {
 
 		hint.add(scroll);
 		content.add(hint, BorderLayout.CENTER);
-		// -----------------°´Å¥--------------------------------
+		// -----------------æŒ‰é’®--------------------------------
 		JPanel btns = new JPanel(new GridLayout(1, 3, 10, 10));
-		JButton okBtn = new JButton("È·ÈÏ");
-		JButton cancelBtn = new JButton("È¡Ïû");
-		JButton randomBtn = new JButton("Ëæ»ú");
-		// È¡Ïû
+		JButton okBtn = new JButton("ç¡®è®¤");
+		JButton cancelBtn = new JButton("å–æ¶ˆ");
+		JButton randomBtn = new JButton("éšæœº");
+		// å–æ¶ˆ
 		cancelBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -155,7 +155,7 @@ public class FunctionDialog extends JDialog {
 				FunctionDialog.this.setVisible(false);
 			}
 		});
-		// È·ÈÏ
+		// ç¡®è®¤
 		okBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -165,7 +165,7 @@ public class FunctionDialog extends JDialog {
 					fun.setDashes(dashes);
 					FunctionDialog.this.setVisible(false);
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "¹«Ê½¸ñÊ½ÓĞÎó£¬Çë²Î¿¼¸ñÊ½ËµÃ÷»òÕßËæ»úÉú³É");
+					JOptionPane.showMessageDialog(null, "å…¬å¼æ ¼å¼æœ‰è¯¯ï¼Œè¯·å‚è€ƒæ ¼å¼è¯´æ˜æˆ–è€…éšæœºç”Ÿæˆ");
 				}
 			}
 		});
@@ -174,7 +174,7 @@ public class FunctionDialog extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Random random = new Random();
-				// Ëæ»úÉú³É±ÊË¢
+				// éšæœºç”Ÿæˆç¬”åˆ·
 				int r = random.nextInt(3) + 1;
 				String str = String.valueOf((random.nextInt(10) + 1));
 				for (int i = 0; i < r * 2 - 1; i++)
@@ -185,9 +185,9 @@ public class FunctionDialog extends JDialog {
 				} catch (Exception e1) {
 
 				}
-				// Ëæ»úÉú³ÉÑÕÉ«
+				// éšæœºç”Ÿæˆé¢œè‰²
 				color = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
-				// Ëæ»úÉú³É±í´ïÊ½
+				// éšæœºç”Ÿæˆè¡¨è¾¾å¼
 				int order = random.nextInt(4) + 1;
 				int a[] = new int[order + 1];
 				for (int i = 0; i < order; i++)
@@ -209,7 +209,7 @@ public class FunctionDialog extends JDialog {
 		content.add(btns, BorderLayout.SOUTH);
 		setResizable(false);
 
-		if (fun != null)// ÔØÈë½«ÒªĞŞ¸ÄµÄº¯Êı
+		if (fun != null)// è½½å…¥å°†è¦ä¿®æ”¹çš„å‡½æ•°
 		{
 			dashes = fun.getDashes();
 			if (dashes != null && dashes.length > 0) {
@@ -233,7 +233,7 @@ public class FunctionDialog extends JDialog {
 		for (int i = 0; i < strs.length; i++) {
 			ret[i] = Float.parseFloat(strs[i]);
 			if (ret[i] == 0)
-				throw new Exception("±ÊË¢¸ñÊ½´íÎó");
+				throw new Exception("ç¬”åˆ·æ ¼å¼é”™è¯¯");
 		}
 		return ret;
 	}

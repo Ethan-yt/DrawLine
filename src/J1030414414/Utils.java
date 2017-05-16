@@ -6,14 +6,14 @@ import java.math.BigDecimal;
 public class Utils {
 
 	public Utils() {
-		// TODO ×Ô¶¯Éú³ÉµÄ¹¹Ôìº¯Êı´æ¸ù
+		// TODO è‡ªåŠ¨ç”Ÿæˆçš„æ„é€ å‡½æ•°å­˜æ ¹
 	}
 
 	public static String DoubleToString(Double d) {
 		String s = Double.toString(d);
 		if (s.indexOf(".") > 0) {
-			s = s.replaceAll("0+?$", "");// È¥µô¶àÓàµÄ0
-			s = s.replaceAll("[.]$", "");// Èç×îºóÒ»Î»ÊÇ.ÔòÈ¥µô
+			s = s.replaceAll("0+?$", "");// å»æ‰å¤šä½™çš„0
+			s = s.replaceAll("[.]$", "");// å¦‚æœ€åä¸€ä½æ˜¯.åˆ™å»æ‰
 		}
 		return s;
 	}
@@ -33,14 +33,14 @@ public class Utils {
 	@SuppressWarnings("serial")
 	public static class OriginPoint extends Point2D.Double {
 		/*
-		 * ±ä»»×ø±ê
+		 * å˜æ¢åæ ‡
 		 */
-		// ÓÉ»æÍ¼×ø±êÏµ±ä»»µ½ÏµÍ³×ø±êÏµ
+		// ç”±ç»˜å›¾åæ ‡ç³»å˜æ¢åˆ°ç³»ç»Ÿåæ ‡ç³»
 		public Point2D.Double c(double x, double y) {
 			return new Point2D.Double(getX() + x, getY() - y);
 		}
 
-		// ÓÉÏµÍ³×ø±êÏµ±ä»»µ½»æÍ¼×ø±êÏµ
+		// ç”±ç³»ç»Ÿåæ ‡ç³»å˜æ¢åˆ°ç»˜å›¾åæ ‡ç³»
 		public Point2D.Double r(double x, double y) {
 			return new Point2D.Double(x - getX(), getY() - y);
 		}

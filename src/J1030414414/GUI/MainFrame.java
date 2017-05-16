@@ -33,45 +33,45 @@ public class MainFrame extends JFrame {
 	private MainFrameSettings settingPanel = new MainFrameSettings(myPanel);
 
 	public MainFrame() {
-		super("ÇúÏß»æÖÆ");
+		super("æ›²çº¿ç»˜åˆ¶");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container container = getContentPane();
 
-		// ÉèÖÃ²¼¾Ö
+		// è®¾ç½®å¸ƒå±€
 		container.setLayout(new BorderLayout());
 		container.add(myPanel, BorderLayout.CENTER);
 		container.add(settingPanel, BorderLayout.EAST);
 
-		// ÊµÑéÈıĞÂÔö²Ëµ¥À¸
+		// å®éªŒä¸‰æ–°å¢èœå•æ 
 		JMenuBar bar = new JMenuBar();
-		JMenu fileMenu = new JMenu("ÎÄ¼ş(F)");
+		JMenu fileMenu = new JMenu("æ–‡ä»¶(F)");
 		fileMenu.setMnemonic('F');
 
-		JMenuItem file_new = new JMenuItem("ĞÂ½¨(N)");
+		JMenuItem file_new = new JMenuItem("æ–°å»º(N)");
 		file_new.setMnemonic('N');
 		fileMenu.add(file_new);
 
-		JMenuItem file_open = new JMenuItem("´ò¿ª(O)...");
+		JMenuItem file_open = new JMenuItem("æ‰“å¼€(O)...");
 		file_open.setMnemonic('O');
 		fileMenu.add(file_open);
 
-		JMenuItem file_save = new JMenuItem("±£´æ(S)...");
+		JMenuItem file_save = new JMenuItem("ä¿å­˜(S)...");
 		file_save.setMnemonic('S');
 		fileMenu.add(file_save);
 		fileMenu.addSeparator();
 
-		JMenuItem file_export = new JMenuItem("µ¼³öÍ¼Æ¬(E)...");
+		JMenuItem file_export = new JMenuItem("å¯¼å‡ºå›¾ç‰‡(E)...");
 		file_export.setMnemonic('E');
 		fileMenu.add(file_export);
-		// ---------------------------µ¼³öÍ¼Æ¬-------------------------------------
+		// ---------------------------å¯¼å‡ºå›¾ç‰‡-------------------------------------
 		file_export.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser("./");
-				fc.setSelectedFile(new File("Î´ÃüÃû.jpg"));
+				fc.setSelectedFile(new File("æœªå‘½å.jpg"));
 				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				fc.setFileFilter(new FileNameExtensionFilter("JPGÍ¼Æ¬(*.jpg)", "jpg"));
+				fc.setFileFilter(new FileNameExtensionFilter("JPGå›¾ç‰‡(*.jpg)", "jpg"));
 				if (fc.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 					String fname = null;
 					File file = fc.getSelectedFile();
@@ -81,7 +81,7 @@ public class MainFrame extends JFrame {
 							fname += ".jpg";
 						file = new File(fname);
 						if (file.exists()) {
-							int i = JOptionPane.showConfirmDialog(MainFrame.this, "¸ÃÍ¼Æ¬ÒÑ¾­´æÔÚ£¬È·¶¨Òª¸²¸ÇÂğ£¿", "ÌáÊ¾",
+							int i = JOptionPane.showConfirmDialog(MainFrame.this, "è¯¥å›¾ç‰‡å·²ç»å­˜åœ¨ï¼Œç¡®å®šè¦è¦†ç›–å—ï¼Ÿ", "æç¤º",
 									JOptionPane.YES_NO_OPTION);
 							if (i != javax.swing.JOptionPane.YES_OPTION)
 								return;
@@ -94,15 +94,15 @@ public class MainFrame extends JFrame {
 							myPanel.paint(g);
 							try {
 								ImageIO.write(image, "jpg", file);
-								JOptionPane.showMessageDialog(null, "Í¼Æ¬±£´æ³É¹¦", "±£´æ³É¹¦", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, "å›¾ç‰‡ä¿å­˜æˆåŠŸ", "ä¿å­˜æˆåŠŸ", JOptionPane.INFORMATION_MESSAGE);
 							} catch (IOException e1) {
-								JOptionPane.showMessageDialog(MainFrame.this, "±£´æÍ¼Æ¬´íÎó", "´íÎó",
+								JOptionPane.showMessageDialog(MainFrame.this, "ä¿å­˜å›¾ç‰‡é”™è¯¯", "é”™è¯¯",
 										JOptionPane.ERROR_MESSAGE);
 							}
 							image.flush();
 							g.dispose();
 						} catch (Exception ex) {
-							JOptionPane.showMessageDialog(MainFrame.this, "³ö´í£º" + ex.getMessage());
+							JOptionPane.showMessageDialog(MainFrame.this, "å‡ºé”™ï¼š" + ex.getMessage());
 						}
 					}
 
@@ -112,7 +112,7 @@ public class MainFrame extends JFrame {
 		});
 		fileMenu.addSeparator();
 
-		JMenuItem file_exit = new JMenuItem("ÍË³ö(X)");
+		JMenuItem file_exit = new JMenuItem("é€€å‡º(X)");
 		file_exit.setMnemonic('X');
 		fileMenu.add(file_exit);
 		file_exit.addActionListener(new ActionListener() {
@@ -125,38 +125,38 @@ public class MainFrame extends JFrame {
 		});
 		bar.add(fileMenu);
 
-		JMenu editMenu = new JMenu("±à¼­(E)");
+		JMenu editMenu = new JMenu("ç¼–è¾‘(E)");
 		editMenu.setMnemonic('E');
 
-		JMenuItem edit_insert = new JMenuItem("²åÈëº¯Êı(I)...");
+		JMenuItem edit_insert = new JMenuItem("æ’å…¥å‡½æ•°(I)...");
 		edit_insert.setMnemonic('I');
 		editMenu.add(edit_insert);
 
-		JMenu edit_edit = new JMenu("ĞŞ¸Äº¯Êı(E)");
+		JMenu edit_edit = new JMenu("ä¿®æ”¹å‡½æ•°(E)");
 		edit_edit.setMnemonic('E');
 		editMenu.add(edit_edit);
 
-		JMenu edit_delete = new JMenu("É¾³ıº¯Êı(D)");
+		JMenu edit_delete = new JMenu("åˆ é™¤å‡½æ•°(D)");
 		edit_delete.setMnemonic('D');
 		editMenu.add(edit_delete);
-		// mapÓÃÓÚ½«²Ëµ¥ºÍº¯Êı¹ØÁªÆğÀ´
+		// mapç”¨äºå°†èœå•å’Œå‡½æ•°å…³è”èµ·æ¥
 		Map<JMenuItem, Function> map = new HashMap<JMenuItem, Function>();
-		// ----------------------------²åÈëº¯Êı--------------------------------
+		// ----------------------------æ’å…¥å‡½æ•°--------------------------------
 		edit_insert.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FunctionDialog functionDialog = new FunctionDialog(MainFrame.this, "²åÈëº¯Êı");
+				FunctionDialog functionDialog = new FunctionDialog(MainFrame.this, "æ’å…¥å‡½æ•°");
 				functionDialog.setVisible(true);
 				if (functionDialog.fun != null) {
-					// ²åÈëº¯Êı
+					// æ’å…¥å‡½æ•°
 					myPanel.fun.add(functionDialog.fun);
 					myPanel.repaint();
 					addFunMenu(edit_edit, edit_delete, map, functionDialog.fun);
 				}
 			}
 		});
-		// -----------------------------ĞÂ½¨-------------------------------------
+		// -----------------------------æ–°å»º-------------------------------------
 		file_new.addActionListener(new ActionListener() {
 
 			@Override
@@ -168,7 +168,7 @@ public class MainFrame extends JFrame {
 				myPanel.repaint();
 			}
 		});
-		// ------------------------´ò¿ªÎÄ¼ş---------------------------
+		// ------------------------æ‰“å¼€æ–‡ä»¶---------------------------
 		file_open.addActionListener(new ActionListener() {
 
 			@SuppressWarnings("unchecked")
@@ -176,7 +176,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser("./");
 				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				fc.setFileFilter(new FileNameExtensionFilter("º¯ÊıÎÄ¼ş(*.fun)", "fun"));
+				fc.setFileFilter(new FileNameExtensionFilter("å‡½æ•°æ–‡ä»¶(*.fun)", "fun"));
 				if (fc.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					try {
@@ -184,11 +184,11 @@ public class MainFrame extends JFrame {
 						ObjectInputStream in = new ObjectInputStream(fs);
 
 						if (!myPanel.fun.isEmpty()) {
-							int i = JOptionPane.showConfirmDialog(MainFrame.this, "È·¶¨·ÅÆúµ±Ç°µÄ¹¤×÷£¿", "ÌáÊ¾",
+							int i = JOptionPane.showConfirmDialog(MainFrame.this, "ç¡®å®šæ”¾å¼ƒå½“å‰çš„å·¥ä½œï¼Ÿ", "æç¤º",
 									JOptionPane.YES_NO_OPTION);
 							if (i != javax.swing.JOptionPane.YES_OPTION)
 								return;
-							// Çå¿Õµ±Ç°µÄ
+							// æ¸…ç©ºå½“å‰çš„
 							myPanel.fun.clear();
 							edit_edit.removeAll();
 							edit_delete.removeAll();
@@ -203,21 +203,21 @@ public class MainFrame extends JFrame {
 						myPanel.repaint();
 						in.close();
 					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(MainFrame.this, "³ö´í£º" + ex.getMessage());
+						JOptionPane.showMessageDialog(MainFrame.this, "å‡ºé”™ï¼š" + ex.getMessage());
 					}
 				}
 			}
 		});
 
-		// ------------------------±£´æÎÄ¼ş---------------------------
+		// ------------------------ä¿å­˜æ–‡ä»¶---------------------------
 		file_save.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser("./");
-				fc.setSelectedFile(new File("Î´ÃüÃû.fun"));
+				fc.setSelectedFile(new File("æœªå‘½å.fun"));
 				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				fc.setFileFilter(new FileNameExtensionFilter("º¯ÊıÎÄ¼ş(*.fun)", "fun"));
+				fc.setFileFilter(new FileNameExtensionFilter("å‡½æ•°æ–‡ä»¶(*.fun)", "fun"));
 				if (fc.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 					String fname = null;
 					File file = fc.getSelectedFile();
@@ -227,7 +227,7 @@ public class MainFrame extends JFrame {
 							fname += ".fun";
 						file = new File(fname);
 						if (file.exists()) {
-							int i = JOptionPane.showConfirmDialog(MainFrame.this, "¸ÃÎÄ¼şÒÑ¾­´æÔÚ£¬È·¶¨Òª¸²¸ÇÂğ£¿", "ÌáÊ¾",
+							int i = JOptionPane.showConfirmDialog(MainFrame.this, "è¯¥æ–‡ä»¶å·²ç»å­˜åœ¨ï¼Œç¡®å®šè¦è¦†ç›–å—ï¼Ÿ", "æç¤º",
 									JOptionPane.YES_NO_OPTION);
 							if (i != javax.swing.JOptionPane.YES_OPTION)
 								return;
@@ -238,7 +238,7 @@ public class MainFrame extends JFrame {
 							os.writeObject(myPanel.fun);
 							os.close();
 						} catch (Exception ex) {
-							JOptionPane.showMessageDialog(MainFrame.this, "³ö´í£º" + ex.getMessage());
+							JOptionPane.showMessageDialog(MainFrame.this, "å‡ºé”™ï¼š" + ex.getMessage());
 						}
 					}
 
@@ -248,10 +248,10 @@ public class MainFrame extends JFrame {
 
 		bar.add(editMenu);
 
-		JMenu viewMenu = new JMenu("ÊÓÍ¼(V)");
+		JMenu viewMenu = new JMenu("è§†å›¾(V)");
 		viewMenu.setMnemonic('V');
 
-		JCheckBoxMenuItem view_Settings = new JCheckBoxMenuItem("×ø±êÖáÉèÖÃ(A)");
+		JCheckBoxMenuItem view_Settings = new JCheckBoxMenuItem("åæ ‡è½´è®¾ç½®(A)");
 		view_Settings.setMnemonic('A');
 		view_Settings.setSelected(true);
 		viewMenu.add(view_Settings);
@@ -265,7 +265,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 
-		JCheckBoxMenuItem view_Signs = new JCheckBoxMenuItem("Í¼Àı(S)");
+		JCheckBoxMenuItem view_Signs = new JCheckBoxMenuItem("å›¾ä¾‹(S)");
 		view_Signs.setMnemonic('S');
 		view_Signs.setSelected(true);
 		viewMenu.add(view_Signs);
@@ -279,7 +279,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 
-		JCheckBoxMenuItem view_Refer = new JCheckBoxMenuItem("²Î¿¼Ïß(S)");
+		JCheckBoxMenuItem view_Refer = new JCheckBoxMenuItem("å‚è€ƒçº¿(S)");
 		view_Refer.setMnemonic('R');
 		view_Refer.setSelected(true);
 		viewMenu.add(view_Refer);
@@ -293,7 +293,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 
-		JCheckBoxMenuItem view_MouseLoc = new JCheckBoxMenuItem("Êó±êÖ¸Ê¾(S)");
+		JCheckBoxMenuItem view_MouseLoc = new JCheckBoxMenuItem("é¼ æ ‡æŒ‡ç¤º(S)");
 		view_MouseLoc.setMnemonic('M');
 		view_MouseLoc.setSelected(true);
 		viewMenu.add(view_MouseLoc);
@@ -309,10 +309,10 @@ public class MainFrame extends JFrame {
 
 		bar.add(viewMenu);
 
-		JMenu helpMenu = new JMenu("°ïÖú(H)");
+		JMenu helpMenu = new JMenu("å¸®åŠ©(H)");
 		helpMenu.setMnemonic('H');
 
-		JMenuItem help_about = new JMenuItem("¹ØÓÚ(A)...");
+		JMenuItem help_about = new JMenuItem("å…³äº(A)...");
 		help_about.setMnemonic('A');
 		helpMenu.add(help_about);
 
@@ -326,13 +326,13 @@ public class MainFrame extends JFrame {
 					java.net.URI uri = java.net.URI.create(url);
 					java.awt.Desktop dp = java.awt.Desktop.getDesktop();
 					if (dp.isSupported(java.awt.Desktop.Action.BROWSE)) {
-						dp.browse(uri);// »ñÈ¡ÏµÍ³Ä¬ÈÏä¯ÀÀÆ÷´ò¿ªÁ´½Ó
+						dp.browse(uri);// è·å–ç³»ç»Ÿé»˜è®¤æµè§ˆå™¨æ‰“å¼€é“¾æ¥
 					}
 				} catch (java.lang.NullPointerException e1) {
-					// ´ËÎªuriÎª¿ÕÊ±Å×³öÒì³£
+					// æ­¤ä¸ºuriä¸ºç©ºæ—¶æŠ›å‡ºå¼‚å¸¸
 					e1.printStackTrace();
 				} catch (java.io.IOException e1) {
-					// ´ËÎªÎŞ·¨»ñÈ¡ÏµÍ³Ä¬ÈÏä¯ÀÀÆ÷
+					// æ­¤ä¸ºæ— æ³•è·å–ç³»ç»Ÿé»˜è®¤æµè§ˆå™¨
 					e1.printStackTrace();
 				}
 
@@ -425,26 +425,26 @@ public class MainFrame extends JFrame {
 
 		});
 
-		setSize(1200, 800);// ³õÊ¼´óĞ¡
-		this.setMinimumSize(new Dimension(1200, 800));// ÏŞ¶¨×îĞ¡´óĞ¡
+		setSize(1200, 800);// åˆå§‹å¤§å°
+		this.setMinimumSize(new Dimension(1200, 800));// é™å®šæœ€å°å¤§å°
 
 		setVisible(true);
 		this.requestFocus();
 	}
 
 	private void addFunMenu(JMenu edit_edit, JMenu edit_delete, Map<JMenuItem, Function> map, Function fun) {
-		// ¸üĞÂ²Ëµ¥
+		// æ›´æ–°èœå•
 		String itemTittle = fun.toString();
 		JMenuItem editItem = new JMenuItem(itemTittle);
 		JMenuItem deleteItem = new JMenuItem(itemTittle);
 		map.put(editItem, fun);
-		// ĞŞ¸Äº¯Êı
+		// ä¿®æ”¹å‡½æ•°
 		editItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				FunctionDialog functionDialog = new FunctionDialog(MainFrame.this, "ĞŞ¸Äº¯Êı", map.get(editItem));
+				FunctionDialog functionDialog = new FunctionDialog(MainFrame.this, "ä¿®æ”¹å‡½æ•°", map.get(editItem));
 				functionDialog.setVisible(true);
 				if (functionDialog.fun != null) {
 					myPanel.fun.set(myPanel.fun.indexOf(map.get(editItem)), functionDialog.fun);
@@ -456,7 +456,7 @@ public class MainFrame extends JFrame {
 
 			}
 		});
-		// É¾³ıº¯Êı
+		// åˆ é™¤å‡½æ•°
 		deleteItem.addActionListener(new ActionListener() {
 
 			@Override

@@ -22,7 +22,7 @@ public class Function implements Serializable {
 		if (order > this.order)
 			return;
 		if (order == this.order && x == 0)
-			throw new Exception("×î¸ßÏîÏµÊı²»¿ÉÒÔÎª0");
+			throw new Exception("æœ€é«˜é¡¹ç³»æ•°ä¸å¯ä»¥ä¸º0");
 		str = "";
 		this.a[order] = x;
 
@@ -98,7 +98,7 @@ public class Function implements Serializable {
 	}
 
 	public static Function parseFun(String exp) {
-		if (exp.charAt(0) != '-' || exp.charAt(0) != '+')// ÎªµÚÒ»ÏîÌí¼Ó+ºÅ
+		if (exp.charAt(0) != '-' || exp.charAt(0) != '+')// ä¸ºç¬¬ä¸€é¡¹æ·»åŠ +å·
 			exp = "+" + exp;
 		Pattern p = Pattern.compile("((-|\\+)\\d*)(x?)(\\d*)");
 		Matcher m = p.matcher(exp);
